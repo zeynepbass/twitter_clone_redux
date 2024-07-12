@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const fetchHomeData = () => {
   return (dispatch) => {
-    axios.get('http://localhost:9361/post/panel')
+    axios.get('http://localhost:9378/post/panel')
       .then((response) => {
         dispatch({ type: 'Home', payload: response.data.reverse() });
       })
@@ -13,7 +13,7 @@ export const fetchHomeData = () => {
 };
 export const Detay = (id) => {
   return (dispatch) => {
-    axios.get(`http://localhost:9361/post/detay/${id}`)
+    axios.get(`http://localhost:9378/post/detay/${id}`)
       .then((response) => {
         dispatch({ type: 'Detay', payload: response.data });
       })
@@ -24,7 +24,7 @@ export const Detay = (id) => {
 };
 export const CommentPost = (id,yorum) => {
   return (dispatch) => {
-    axios.post(`http://localhost:9361/post/detay/${id}`,{yorum})
+    axios.post(`http://localhost:9378/post/detay/${id}`,{yorum})
       .then((response) => {
         dispatch({ type: 'Post', payload: response.data });
       })

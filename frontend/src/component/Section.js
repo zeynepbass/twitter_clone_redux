@@ -9,7 +9,10 @@ const Section = () => {
   useEffect(() => {
     dispatch(fetchHomeData());
   }, [dispatch]);
+
   return (
+    <>
+   
     <div className="middle-section">
       <div className="top-nav">
         <div className="search-flex">
@@ -73,6 +76,7 @@ const Section = () => {
         })}
       </div>
     </div>
+    </>
   );
 };
 

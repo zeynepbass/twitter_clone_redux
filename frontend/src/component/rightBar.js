@@ -1,22 +1,10 @@
 import React from "react";
 import {Link} from "react-router-dom"
 const RightBar = () => {
+  const User=JSON.parse(localStorage.getItem("user"));
   return (
     <>
-    <div className="right-sidebar">
-    <div className="signup-container">
-      <h3>Trend</h3>
-      <p>Sign up now to get your own personalized timeline!</p>
-
-
-        <p>Gönderiler</p>
-       <Link to="popular" style={{textDecoration:"none",color:"white"}}> <h3>#populer</h3></Link>
-  
-    
-    </div>
-  
-  </div>
-    <div className="right-sidebar">
+     {User ?  ( <div className="right-sidebar">
       <div className="signup-container">
         <h3>New to Twitter?</h3>
         <p>Sign up now to get your own personalized timeline!</p>
@@ -71,7 +59,23 @@ const RightBar = () => {
       <div className="right-links">
         <p>© 2022 Twitter, Inc.</p>
       </div>
+    </div>): (
+        <div className="right-sidebar">
+    <div className="signup-container">
+      <h3>Trend</h3>
+      <p>Sign up now to get your own personalized timeline!</p>
+
+
+        <p>Gönderiler</p>
+       <Link to="populer" style={{textDecoration:"none",color:"white"}}> <h3>#populer</h3></Link>
+  
+    
     </div>
+  
+  </div>)
+  }
+  
+   
     </>
   );
 };

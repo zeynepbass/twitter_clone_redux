@@ -4,10 +4,10 @@ import App from './App';
 import {createStore,applyMiddleware} from "redux"
 import {thunk} from "redux-thunk"
 import {Provider} from "react-redux"
-import Home from "../src/reducer/Index"
+import RootReducer from "../src/reducer/RootReducer"
 import {BrowserRouter} from "react-router-dom"
 const store=createStore(
-  Home,
+  RootReducer,
   applyMiddleware(thunk)
 )
 const root = ReactDOM.createRoot(document.getElementById('root'));
