@@ -5,7 +5,7 @@ import {Link} from "react-router-dom"
 const Populer = () => {
     const [user,setUser]=useState(false)
   const dispatch = useDispatch();
-  const yaziListesi = useSelector((state) => state.yaziListesi);
+  const yaziListesi = useSelector((state) => state.Index.yaziListesi);
  
 
   useEffect(() => {
@@ -15,6 +15,7 @@ const Populer = () => {
     // Her bir öğenin tags dizisini döngüye alıp "populer" etiketini içerip içermediğini kontrol ediyoruz
     return item.tags.some(tag => tag.includes('populer'));
   });
+
   return (
 
     <div className="middle-populer">
@@ -85,7 +86,7 @@ const Populer = () => {
       <>
       
 {
-      data.map((item, index) => (
+      data && data.map((item, index) => (
         <React.Fragment key={index}>
           <div className="trending-box" style={{ cursor: "pointer" }}>
             <p className="trending-heading">{item.baslik} </p>

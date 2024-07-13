@@ -4,12 +4,12 @@ import { fetchHomeData } from "../actions/home";
 import {Link} from "react-router-dom"
 const Section = () => {
   const dispatch = useDispatch();
-  const yaziListesi = useSelector((state) => state.yaziListesi);
+  const yaziListesi = useSelector((state) => state.Index.yaziListesi);
 
   useEffect(() => {
     dispatch(fetchHomeData());
   }, [dispatch]);
-
+console.log(yaziListesi)
   return (
     <>
    
@@ -34,7 +34,7 @@ const Section = () => {
       </div>
 
       <div id="ForYou" className="tabcontent">
-        {yaziListesi.map((item, index) => {
+        {yaziListesi && yaziListesi.map((item, index) => {
           return (
             <>
   

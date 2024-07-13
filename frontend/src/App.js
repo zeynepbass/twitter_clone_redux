@@ -9,10 +9,10 @@ import Register from "../src/pages/Register"
 function App() {
   return <>
   <Routes>
-    <Route path="/ana-sayfa" element={<Dashboard content={ <Section  />}/>}></Route>
+    <Route path="/" element={<Dashboard content={ <Section  />}/>}></Route>
     <Route path="/detay/:id" element={<Dashboard content={<Detay />} />}></Route>
     <Route path="/populer" element={<Dashboard content={<Populer />} />}></Route>
-    <Route path="/" element={<Login/>}></Route>
+    <Route path="/giris-yap" element={<Login/>}></Route>
     <Route path="/üye-ol" element={<Register/>}></Route>
   </Routes>
   </>
