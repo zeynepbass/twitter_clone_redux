@@ -142,11 +142,20 @@ const signup = async (req, res) => {
     const { email, password, confirmPassword, firstName, lastName } = req.body;
 
     try {
+        // Giriş verilerini loglayın
+        console.log('Gelen veri:', { email, password, confirmPassword, firstName, lastName });
+
         const kullanici = await User.findOne({ email });
 
-        if (kullanici) return res.status(400).json({ message: 'Kullanıcı Zaten Bulunuyor' });
+        if (kullanici) {
+            console.log('Kullanıcı Zaten Bulunuyor');
+            return res.status(400).json({ message: 'Kullanıcı Zaten Bulunuyor' });
+        }
 
-        if (password !== confirmPassword) return res.status(400).json({ message: 'Parolalar uyuşmadı!' });
+        if (password !== confirmPassword) {
+            console.log('Parolalar uyuşmadı!');
+            return res.status(400).json({ message: 'Parolalar uyuşmadı!' });
+        }
 
         const sifrelenmisParola = await bcrypt.hash(password, 12);
 
@@ -159,9 +168,12 @@ const signup = async (req, res) => {
 
         const token = jwt.sign({ email: result.email, id: result._id }, 'aos-secret-key', { expiresIn: '30d' });
 
+        console.log('Kullanıcı başarıyla oluşturuldu:', result);
+
         res.status(200).json({ result, token });
     } catch (error) {
-        res.status(500).json({ message: 'Bir hata oluştu' });
+        console.error('Bir hata oluştu:', error);
+        res.status(500).json({ message: 'Bir hata oluştu', error: error.message });
     }
 };
 

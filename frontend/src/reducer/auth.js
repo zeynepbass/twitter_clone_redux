@@ -1,5 +1,5 @@
 const INITIAL_STATE={
-    auth:{}
+    auth:null
 }
 
 const Login = (state=INITIAL_STATE,action) => {
@@ -7,7 +7,9 @@ const Login = (state=INITIAL_STATE,action) => {
     case "auth":
         return {...state,auth:action.payload}
         
- 
+ case "authLogin":
+    return {...state,auth:action.payload, error: null}
+
         default:
             return state;
  }

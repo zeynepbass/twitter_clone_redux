@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import "./login.css";
-import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from 'react-redux';
+import { Link,useNavigate } from "react-router-dom";
 import { FetchAuthData } from "../actions/auth";
 
 const Register = () => {
@@ -14,12 +14,24 @@ const Register = () => {
     confirmPassword: "",
   });
   const handleChange = (e) => {
-    setData({ ...data, [e.taget.name]: e.target.value });
+    setData({ ...data, [e.target.name]: e.target.value });
   };
+  const error = useSelector((state) => state.auth?.error);
+
+  useEffect(() => {
+      if (error) {
+          alert(error);
+      }
+  }, [error]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(FetchAuthData(data));
-  };
+    if (data.password !== data.confirmPassword) {
+      alert("Parolalar uyuşmuyor!");
+      return;
+  }
+  dispatch(FetchAuthData(data));
+};
   return (
     <>
       <div className="container-fluid p-0 m-0">
@@ -78,7 +90,7 @@ const Register = () => {
                     />
 
                     <input
-                      type="text"
+                      type="email"
                       id="usuario"
                       placeholder="email"
                       name="email" value={data.email} onChange={handleChange}
@@ -91,7 +103,7 @@ const Register = () => {
                       }}
                     />
                     <input
-                      type="text"
+                      type="password"
                       id="usuario"
                       name="password" value={data.password} onChange={handleChange}
                       placeholder="parola"
@@ -104,7 +116,7 @@ const Register = () => {
                       }}
                     />
                     <input
-                      type="text"
+                      type="password"
                       id="usuario"
                       placeholder="parola tekrar"
                       name="confirmPassword" value={data.confirmPassword} onChange={handleChange} 

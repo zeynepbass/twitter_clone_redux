@@ -7,15 +7,23 @@ import Populer from "../src/pages/Populer"
 import Login from "../src/pages/Login"
 import Register from "../src/pages/Register"
 function App() {
-  return <>
-  <Routes>
-    <Route path="/" element={<Dashboard content={ <Section  />}/>}></Route>
-    <Route path="/detay/:id" element={<Dashboard content={<Detay />} />}></Route>
-    <Route path="/populer" element={<Dashboard content={<Populer />} />}></Route>
-    <Route path="/giris-yap" element={<Login/>}></Route>
-    <Route path="/üye-ol" element={<Register/>}></Route>
-  </Routes>
-  </>
+  const User= JSON.parse(localStorage.getItem("user"))
+  return (
+    <Routes>
+      {User ? (
+        <>
+          <Route path="/" element={<Dashboard content={<Section />} />} />
+          <Route path="/detay/:id" element={<Dashboard content={<Detay />} />} />
+          <Route path="/populer" element={<Dashboard content={<Populer />} />} />
+        </>
+      ) : (
+        <>
+          <Route path="/giris-yap" element={<Login />} />
+          <Route path="/üye-ol" element={<Register />} />
+        </>
+      )}
+    </Routes>
+  );
 }
 
 export default App;

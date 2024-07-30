@@ -1,9 +1,35 @@
-import React from "react";
+import React, { useState, } from "react";
 import "./login.css";
+import {useNavigate} from "react-router-dom"
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-
+import { FetchLogin } from "../actions/auth";
 const Login = () => {
- 
+  const dispatch = useDispatch();
+  const [data, setData] = useState({ email: "", password: "" });
+
+  const handleChange = (e) => {
+    setData({ ...data, [e.target.name]: e.target.value });
+  };
+const navigate=useNavigate()
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await dispatch(FetchLogin(data));
+      console.log('Response in handleSubmit:', response); // Yanıtı kontrol etmek için ekleyin
+      if (response?.token) {
+ localStorage.setItem("user", JSON.stringify(response));
+        alert("Hoş geldin");
+        navigate("/")
+  
+      }
+    } catch (error) {
+      console.error('Error during login:', error);
+      alert('Bir hata oluştu');
+    }
+  };
+
   return (
     <>
       <div className="container-fluid p-0 m-0">
@@ -28,12 +54,17 @@ const Login = () => {
               <main className="" style={{ width: "600px" }}>
                 <h1>Twitter Giriş Yap</h1>
                 <div className="container">
-                  <form  className="" style={{ textAlign: "center" }}>
+                  <form
+                    className=""
+                    style={{ textAlign: "center" }}
+                    onSubmit={handleSubmit}
+                  >
                     <input
-                      type="text"
-                      id="usuario"
-                      
+                      type="email"
+                      name="email"
                       placeholder="email"
+                      value={data.email}
+                      onChange={handleChange}
                       className="mb-1"
                       style={{
                         backgroundColor: "white",
@@ -43,8 +74,10 @@ const Login = () => {
                       }}
                     />
                     <input
-                      type="text"
-                      id="usuario"
+                      type="password"
+                      name="password"
+                      value={data.password}
+                      onChange={handleChange}
                       placeholder="parola"
                       className="mb-1"
                       style={{
