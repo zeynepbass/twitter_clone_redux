@@ -93,9 +93,9 @@ const navigate=useNavigate()
                     </button>
                   </form>
                   <div className="links container">
-                    <a target="_blank" href="https://twitter.com/login?lang=pt">
+                    <h6>
                       üye değilsen,
-                    </a>
+                    </h6>
                     <span className="ponto"></span>
                     <Link to="/üye-ol">Üye Ol</Link>
                   </div>
