@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { idParams, objectId } from '../../shared/validation.js';
+import { IMAGE_WIDTHS } from './image.service.js';
 
 export { idParams };
 
@@ -46,4 +47,13 @@ export const commentBody = z.object({
 
 export const trendingQuery = z.object({
   limit: z.coerce.number().int().min(1).max(20).default(5),
+});
+
+export const imageQuery = z.object({
+  w: z.coerce
+    .number()
+    .int()
+    .refine((value) => IMAGE_WIDTHS.includes(value), { message: 'Desteklenmeyen görsel genişliği' })
+    .optional(),
+  v: z.string().max(20).optional(),
 });
