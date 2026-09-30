@@ -7,6 +7,7 @@ import {
   commentBody,
   createPostBody,
   idParams,
+  imageQuery,
   listPostsQuery,
   trendingQuery,
   updatePostBody,
@@ -30,7 +31,7 @@ router
   .patch(authenticate, requireAdmin, withId, validate({ body: updatePostBody }), controller.update)
   .delete(authenticate, requireAdmin, withId, controller.remove);
 
-router.get('/:id/image', withId, controller.image);
+router.get('/:id/image', withId, validate({ query: imageQuery }), controller.image);
 router.post('/:id/views', withId, controller.view);
 router.post('/:id/comments', ...requireUser, withId, validate({ body: commentBody }), controller.comment);
 

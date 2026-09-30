@@ -3,6 +3,7 @@ import { AppError } from '../../shared/errors/AppError.js';
 import { ROLES } from '../../shared/security/token.js';
 import { User } from '../users/user.model.js';
 import { Post } from './post.model.js';
+import { renderImage } from './image.service.js';
 import {
   detailProjection,
   summaryProjection,
@@ -11,8 +12,6 @@ import {
   toPostFields,
   toPostSummaryDto,
 } from './post.dto.js';
-
-const DATA_URL = /^data:(image\/[a-z0-9.+-]+);base64,(.+)$/i;
 
 const escapeRegex = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
@@ -58,16 +57,17 @@ export const getPost = async (id, viewerId) => {
   return toPostDetailDto(doc);
 };
 
-export const getPostImage = async (id) => {
-  const post = await Post.findById(id, { selectedFile: 1 }).lean();
+export const getPostImage = async (id, { width }) => {
+  const post = await Post.findById(id, { selectedFile: 1, updatedAt: 1 }).lean();
   if (!post?.selectedFile) throw notFound();
 
-  const match = DATA_URL.exec(post.selectedFile);
-  if (match) {
-    return { contentType: match[1], buffer: Buffer.from(match[2], 'base64') };
-  }
+  const image = await renderImage({
+    key: `${id}:${post.updatedAt?.getTime() ?? 0}`,
+    source: post.selectedFile,
+    width,
+  });
 
-  return { redirect: post.selectedFile };
+  return image ?? { redirect: post.selectedFile };
 };
 
 export const createPost = async (body) => {

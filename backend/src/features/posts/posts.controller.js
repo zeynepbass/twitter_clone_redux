@@ -16,11 +16,15 @@ export const show = async (req, res) => {
 };
 
 export const image = async (req, res) => {
-  const result = await postsService.getPostImage(req.valid.params.id);
+  const { w: width, v: version } = req.valid.query;
+  const result = await postsService.getPostImage(req.valid.params.id, { width });
 
   if (result.redirect) return res.redirect(302, result.redirect);
 
-  res.set({ 'Content-Type': result.contentType, 'Cache-Control': IMAGE_CACHE });
+  res.set({
+    'Content-Type': result.contentType,
+    'Cache-Control': version ? IMAGE_CACHE : 'public, max-age=300',
+  });
   res.send(result.buffer);
 };
 
